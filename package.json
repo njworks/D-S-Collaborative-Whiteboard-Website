@@ -1,0 +1,34 @@
+{
+  "name": "collaBoard",
+  "description": "Collaborative whiteboard",
+  "author": "Nelvin Joseph",
+  "version": "1.0.0",
+  "main": "server.js",
+  "script": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "socket.io",
+    "collaborative",
+    "whiteboard",
+    "mysql",
+    "fabricjs"
+  ],
+  "dependencies": {
+    "express": "~4.15.5",
+    "socket.io": "latest",
+    "mysql": "^2.15.0",
+    "helmet": "^3.10.0",
+    "bcrypt": "^1.0.3",
+    "ejs": "^2.5.7",
+    "ejs-mate": "^2.3.0",
+    "random-id": "^0.0.2",
+    "express-session": "^1.15.6",
+    "body-parser": "~1.18.2",
+    "nodemailer": "4.6.0",
+    "node-schedule": "1.3.0"
+  },
+  "scripts": {
+    "start": "node index"
+  }
+}

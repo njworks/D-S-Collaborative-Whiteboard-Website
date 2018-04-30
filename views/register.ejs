@@ -1,0 +1,35 @@
+<!--Purpose: Register page-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<div>
+    <form action="loginlogo" method="post">
+        <input class="logo" type="image" src="logo.png" alt="logo">
+    </form>
+</div>
+
+<!-- Description : Register form.-->
+<div class="loginDiv">
+    <h1>Sign Up</h1>
+<form id="signup" action="/register" method="post">
+    <label for="sEmail">Email</label>
+    <input class="loginInput" id="sEmail" name="sEmail" type="email" placeholder="Enter Email">
+    <label for="sUser">Username</label>
+    <input class="loginInput" autocomplete="off" id="sUser" name="sUser" type="text" placeholder="Enter Username">
+    <label for="sPass">Password</label>
+    <input class="loginInput" id="sPass" name="sPass" type="password" placeholder="Enter Password">
+    <button class="loginButton">Sign Up</button>
+</form>
+    </br>
+    Have an account?
+<form action="/signInButton">
+    <button class="loginButton">Login</button>
+</form>
+</div>
+</body>
+</html>

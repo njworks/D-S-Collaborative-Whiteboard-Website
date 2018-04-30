@@ -1,0 +1,449 @@
+<!--Purpose: Whiteboard page where user can draw and communicate with other
+    users
+    References: [1]- W3schools.com. (2018). W3.CSS Sidebar. [online]
+    Available at: https://www.w3schools.com/w3css/w3css_sidebar.asp
+    [Accessed 18 Mar. 2018].
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= boardID %></title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" src="fabric.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="jspdf.js"></script>
+    <script type="text/javascript" src="system.js"></script>
+    <script src="https://togetherjs.com/togetherjs-min.js"></script>
+</head>
+<body onload="start()">
+<!-- Description : Logo button.-->
+<div>
+    <form action="userlogo" method="post">
+        <input class="logo" type="image" src="logo.png" alt="logo">
+    </form>
+</div>
+
+<!-- Description : PDF export button.-->
+<div id="divPDF">
+    <button onclick="exportPDF()">PDF Export</button>
+</div>
+<div id="boardTitle">
+    <h2 id="bTitle"><%= boardID %> </h2>
+</div>
+<p id="p1" hidden><%= liveUser %></p>
+<p id="p2" hidden><%= creator %></p>
+<p id="p3" hidden><%= idboard %></p>
+</br>
+<!-- Description : User page and logout button div.-->
+<div id="userbtn">
+    <div class="dropdown">
+        <form action="/user">
+            <button class="dropbtn">User page</button>
+        </form>
+        <div class="dropdown-content">
+            <form action="signOut">
+                <a href="#">
+                    <button>Logout</button>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+</br>
+<!-- Description : Setting button with options to update title, share and FAQ.-->
+<div id="settingbtn">
+    <div class="dropdown">
+        <button class="dropbtn">Settings</button>
+        <div class="dropdown-content">
+            <% if (creator){ %>
+            <a onclick="share()" href="#">Share</a>
+            <a onclick="document.getElementById('changeTitle').style.display = 'block'"
+               href="#">Update Title</a>
+            <% } %>
+            <a onclick="document.getElementById('faqDiv').style.display = 'block'"
+               href="#">FAQ</a>
+        </div>
+    </div>
+
+</div>
+</br>
+
+<!-- Description : Change title div.-->
+<div id="changeTitle" class="modal">
+    <span onclick="document.getElementById('changeTitle').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <form action="/updateTitle" method="post">
+            <input name="boardtitle" type="text" placeholder="Enter New Title">
+            <button>Update Title</button>
+        </form>
+    </div>
+</div>
+<!-- Description : Canvas.-->
+<div id="canvasHold">
+    <canvas id="canvas" height="50" width="50"></canvas>
+</div>
+
+<!-- Description : Zoom in and out of whiteboard.-->
+<div id="zoomI">
+    <button onclick="zoomIn()" id="zIn" type="button"><img src="zIN.svg" style="height: 20px;
+width: 20px;"></button>
+</div>
+<div id="zoomO">
+    <button onclick="zoomOut()" id="zOut" type="button"><img src="zOUT.svg" style="height: 20px;
+width: 20px;"></button>
+</div>
+
+<!-- Description : All the tools to use on whiteboard.-->
+<div id="tools">
+    <table>
+        <tr>
+            <td>
+                <button onclick="removeObject()" id="delete" type="button"><img src="bin.svg"
+                                                                                style="width: 20px; height: 20px">
+                </button>
+            </td>
+            <td>
+                <button onclick="pencil()" id="pencil" type="button"><img src="pencil.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="dropdownA">
+                    <button onclick="addArrow()" class="dropb"><img src="arrow.svg" style="height: 20px;width: 20px;">
+                    </button>
+                    <div class="dropdown-contentA">
+                        <a href="#">
+                            <button style="width: 36px" onclick="addDashLine()"><img src="dashed.svg"
+                                                                                     style="height: 15px; width: 15px;">
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button onclick="addLine()" id="line" type="button"><img src="line.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="addRectangle()" id="square" type="button"><img src="square.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+            <td>
+                <button onclick="addCircle()" id="circle" type="button"><img src="circle.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="addTriangle()" id="triangle" type="button"><img src="tri.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+            <td>
+                <button onclick="addText()" id="text" type="button"><img src="text.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="yNotes()" id="notes" type="button"><img src="ynote.svg" style="height: 20px;
+width: 20px;"></button>
+            </td>
+            <td>
+                <div class="dropdownA">
+                    <button onclick="urlsideOpen()" class="dropb"><img src="addurl.svg"
+                                                                       style="height: 20px;width: 20px;"></button>
+                    <div class="dropdown-contentA">
+                        <button onclick="document.getElementById('addLink').style.display='block'" id="url"
+                                type="button">
+                            <img src="url.svg" style="height: 20px;
+width: 20px;"></button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="dropdownA">
+                    <button onclick="videosideOpen()" class="dropb"><img src="video.svg" style="height: 20px;
+width: 20px;"></button>
+                    <div class="dropdown-contentA">
+                        <button onclick="document.getElementById('addVideo').style.display = 'block'"
+                                id="video" type="button"><img src="addvideo.svg" style="height: 20px; width: 20px;">
+                        </button>
+                    </div>
+                </div>
+            </td>
+            <td><input onclick="addImages()" type="file" id="file" style="display: none;"/>
+                <button type="button" onclick="document.getElementById('file').click()">
+                    <img src="img.svg" style="height: 20px; width: 20px;">
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="drop">
+                    <button class="dropb"><img src="font.svg" style="height: 20px; width: 20px;"></button>
+                    <div class="drop-content">
+                        <a onclick="selectFont('Times New Roman')" href="#">Times New Roman</a>
+                        <a onclick="selectFont('Arial')" href="#">Arial</a>
+                        <a onclick="selectFont('Calibri')" href="#">Calibri</a>
+                        <a onclick="selectFont('Helvetica')" href="#">Helvetica</a>
+                        <a onclick="selectFont('Trebuchet MS')" href="#">Trebuchet MS</a>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="drop">
+                    <button class="dropb"><img src="colour.svg" style="height: 20px; width: 20px;"></button>
+                    <div class="drop-contents">
+                        <table>
+                            <tr>
+                                <td><a onclick="colourChoice('black')" href="#"><img src="black.svg"
+                                                                                     style="height: 15px; width: 15px;"></a>
+                                </td>
+                                <td><a onclick="colourChoice('red')" href="#"><img src="red.svg"
+                                                                                   style="height: 15px; width: 15px;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a onclick="colourChoice('blue')" href="#"><img src="blue.svg"
+                                                                                    style="height: 15px; width: 15px;"></a>
+                                </td>
+                                <td><a onclick="colourChoice('green')" href="#"><img src="green.svg"
+                                                                                     style="height: 15px; width: 15px;"></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><a onclick="colourChoice('yellow')" href="#"><img src="yellow.svg"
+                                                                                      style="height: 15px; width: 15px;"></a>
+                                </td>
+                                <td><a onclick="colourChoice('orange')" href="#"><img src="orange.svg"
+                                                                                      style="height: 15px; width: 15px;"></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="stokeShape()"><img src="stroke.svg" style="height: 20px; width: 20px;"></button>
+            </td>
+            <td>
+                <button onclick="fillShape()"><img src="fill.svg" style="height: 20px; width: 20px;"></button>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="hideshowChat()">
+                    <img src="message.svg" style="height: 20px; width: 20px;"></button>
+            </td>
+            <td>
+                <button onclick="document.getElementById('id01').style.display='block'"><img src="remind.svg"
+                                                                                             style="height: 20px; width: 20px;">
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- Description : Together.js mouse cursor and audio chat feature.-->
+<div id="together">
+<button onclick="TogetherJS(this); return false;">Start Talk</button>
+</div>
+
+<!-- Description : Side bar showing URLs. reference[1]-->
+<div class="w3-sidebar w3-bar-block w3-border-right" style="display: none" id="showURLs">
+    <button onclick="urlsideClose()" class="w3-bar-item w3-large">Close</button>
+    <% if (boardURLs.length === 0 ){ %>
+    <h3>No URL's To Show</h3>
+    <% } else{ for (var g = 0; g < boardURLs.length; g++){ %>
+    <a href="<%= boardURLs[g].url %>" class="w3-bar-item w3-button">
+        <%= boardURLs[g].title %></a>
+    <% }} %>
+</div>
+<!-- Description : Side bar showing video URLs.-->
+<div class="w3-sidebar w3-bar-block w3-border-right" style="display: none" id="showVideos">
+    <button onclick="videosideClose()" class="w3-bar-item w3-large">Close</button>
+    <% if (boardVideos.length === 0 ){ %>
+    <h3>No Videos To Show</h3>
+    <% } else{ for (var g = 0; g < boardVideos.length; g++){ %>
+    <a href="<%= boardVideos[g].url %> " class="w3-bar-item w3-button">
+        <%= boardVideos[g].title %></a>
+    <% }} %>
+</div>
+<!-- Description : FAQ div.-->
+<div id="faqDiv" class="modal">
+    <span onclick="document.getElementById('faqDiv').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <div id="faqScroll">
+            <h2>Using D&S whiteboard Tools</h2>
+            <img src="tools.png" alt="Tools" style="width:300px;height:400px;">
+            <h2>Keyboard Shortcuts</h2>
+             Shift + P : Pencil </br>
+             Shift + S : Rectangle </br>
+             Shift + C : Circle </br>
+             Shift + T : Text </br>
+            <h2>Chat</h2>
+            The text chat allows the user to communicate with other editors
+            on the whiteboard.
+            <h2>Update Title (Creator Only)</h2>
+            Click on "Settings" button and click on "Update Title" and
+            enter the new title.
+            <h2>Share (Creator Only)</h2>
+            Click on "Settings" button and click on "Share"
+            <h2>Add Collaborator (Creator Only)</h2>
+            Click on "Collaborate" button and "Invite Editor" and select
+            the friends you want to add.
+            <h2>View or Remove Collaborators (Creator Only)</h2>
+            Click on "Collaborate" button and "View Collaborators"
+        </div>
+    </div>
+</div>
+<!-- Description : Shows collaborators of the whiteboard.-->
+<div id="collabFriends" class="modal">
+    <span onclick="document.getElementById('collabFriends').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <% if (typeof coll === 'undefined' || coll === null) {
+            var y = 0;
+        }else{ %>
+        <form action="removeCollab" method="post">
+            <% for (var g = 0; g < coll.length; g++){ %>
+            <input type="radio" name="collabs" value="<%= coll[g] %>"> <%= coll[g] %><br>
+            <% } %>
+            <button>Remove Collaborator</button>
+        </form>
+        <% } %>
+    </div>
+</div>
+<!-- Description : Add new collaborators.-->
+<div id="addCollab" class="modal">
+    <span onclick="document.getElementById('addCollab').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <% if (typeof friendList === 'undefined' || friendList === null) {
+            var y = 0;
+        }else{ %>
+        <form action="board" method="post">
+            <% for (var i = 0; i < friendList.length; i++){ %>
+            <input type="checkbox" name="friendChosen" value="<%= friendList[i] %>"><%= friendList[i] %>
+            <% } %>
+            <button>Collaborate</button>
+        </form>
+        <% } %>
+    </div>
+</div>
+<!-- Description : Add URL.-->
+<div id="addLink" class="modal">
+    <span onclick="document.getElementById('addLink').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <form action="newURL" method="post">
+            <label for="URlTitle">Insert Title</label>
+            <input id="URLTitle" name="URLTitle" type="text" autocomplete="off" placeholder="Title">
+            </br>
+            <label for="URLink">Insert URL</label>
+            <input id="URLink" name="URLink" type="url" autocomplete="off" placeholder="URL">
+            <button>Add URL</button>
+        </form>
+    </div>
+</div>
+<!-- Description : Add video URL.-->
+<div id="addVideo" class="modal">
+    <span onclick="document.getElementById('addVideo').style.display='none'"
+          class="close" title="Close Modal">&times;</span>
+    <div class="modal-content animate">
+        <form action="newVideo" method="post">
+            <label for="videoTitle">Insert Title</label>
+            <input id="videoTitle" name="videoTitle" type="text" autocomplete="off" placeholder="Title">
+            </br>
+            <label for="videoLink">Insert URL</label>
+            <input id="videoLink" name="videoLink" type="url" autocomplete="off" placeholder="URL">
+            <button>Add Video</button>
+        </form>
+    </div>
+</div>
+<!-- Description : Set reminder.-->
+<div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+    <form class="modal-content animate" action="setReminder" method="post">
+        <h3>Reminder</h3>
+        Set date: <input id="remindDate" name="remindDate" type="date">
+        </br>
+        </br>
+        Set time: <input id="remindTime" name="remindTime" type="time">
+        </br>
+        </br>
+        To remind: <textarea placeholder="Enter what to remind" rows="5" cols="40" name="remindText"
+                             maxlength="200"></textarea>
+        </br>
+        </br>
+        <button>Set Reminder</button>
+    </form>
+</div>
+<!-- Description : Collaborate button.-->
+<div id="collabDiv">
+    <div class="dropup">
+        <button class="droptn">Collaborate</button>
+        <div class="dropup-content">
+            <%if (creator){%>
+            <a onclick="document.getElementById('addCollab').style.display='block'" href="#">Invite Editor</a>
+            <a onclick="document.getElementById('collabFriends').style.display='block'" href="#">View Collaborators</a>
+        <%}%>
+        </div>
+    </div>
+</div>
+<!-- Description : Chat box.-->
+<div id="chatbox" style="display: none">
+    <div id="Cbox">
+        <ul id="messages">
+            <% if (boardChat.length > 0) {
+            for (var x = 0; x < boardChat.length;x++){
+                var each = boardChat[x].user + ": " + boardChat[x].message; %>
+            <li><%= each %></li>
+            <% } } %>
+        </ul>
+    </div>
+    <form action="" id="chatMessage">
+        <input id="m" autocomplete="off" placeholder="Enter message">
+        <button onclick="chat(m.value)" type="button">Send</button>
+    </form>
+</div>
+</body>
+</html>

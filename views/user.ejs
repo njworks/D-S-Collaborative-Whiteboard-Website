@@ -1,0 +1,120 @@
+<!--Purpose: User page where the user can choose their own or shared whiteboard
+    to work with. The user can search, add and remove friends. Notifications on
+    changes will be shown.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User: <%= name %></title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<!-- Description : Logo button.-->
+<div>
+    <form action="userlogo" method="post">
+        <input class="logo" type="image" src="logo.png" alt="logo">
+    </form>
+</div>
+
+<!-- Description : Sign out button.-->
+<div id="userSignOut">
+    <form action="signOut">
+        <button>Logout</button>
+    </form>
+</div>
+
+<div id="welcome">
+    <h2>Welcome <%= name %>  </h2>
+</div>
+
+</br>
+<!-- Description : Shows users whiteboards and shared whiteboards.-->
+<div id="boardDiv">
+    <form action="createDraw">
+        <button class="userButton">New</button>
+    </form>
+
+    <!--<div id="buttonDelete">-->
+    <!--<form action="deleteboard">-->
+    <!--<button class="userButton">Delete</button>-->
+    <!--</form>-->
+    <!--</div>-->
+
+    <h2>User boards</h2>
+    <div id="userBoardScroll">
+        <% if (typeof boards === 'undefined' || boards === null) {
+            var s = 0;
+        }else { %>
+        <form action="/chooseBoard" method="post">
+            <% for (var i = 0; i < boards.length; i++){ %>
+            <button class="boardButtons" name="bID" value="<%= boards[i][0] %>"><%= boards[i][1] %></button>
+            <% } %>
+        </form>
+        <% } %>
+    </div>
+    </br>
+    </br>
+    <h2>Shared boards</h2>
+    <div id="sharedBoardScroll">
+        <% if (typeof shared === 'undefined' || shared === null) {
+            var y = 0;
+        }else { %>
+        <form action="/selectBoard" method="post">
+            <% for (var i = 0; i < shared.length; i++){ %>
+            <button class="boardButtons" name="sID" value="<%= shared[i][0] %>"><%= shared[i][1] %></button>
+            <% } %>
+        </form>
+        <% } %>
+    </div>
+</div>
+
+<!-- Description : Shows notifications for the user.-->
+<div id="notificationBox">
+    <h2>Notifications</h2>
+    <% if (notification.length === 0) { %>
+    <h3>No Notifications To Show</h3>
+    <% } else{ %>
+    <div id="notificationScroll">
+        <table>
+            <% for (var l = 0; l < notification.length; l++){ %>
+            <tr>
+            <td><%= notification[l] %></td>
+            </tr>
+            <% } %>
+        </table>
+    </div>
+    <% } %>
+</div>
+
+<!-- Description : shows friends and also search and add new friends-->
+<div id="friendDiv">
+    <form action="searchFriend" method="post">
+        <label for="search">Search Friend:</label>
+        <input id="friendId" name="search" type="text" placeholder="Enter username">
+        <button class="userButton">Search</button>
+    </form>
+
+    <% if (typeof friendsList === 'undefined' || friendsList === null) { %>
+
+    <form action="user" method="post">
+        <div id="friendList">
+            <% for (var g = 0; g < uFriends.length; g++){ %>
+            <input autocomplete="off" type="radio" name="friendAll" value="<%= uFriends[g] %>"><%= uFriends[g] %><br>
+            <% } %>
+        </div>
+        <button class="userButton">Remove Friend</button>
+    </form>
+
+    <% }else { %>
+    <form action="addFriend" method="post">
+        <% for (var j = 0; j < friendsList.length; j++){ %>
+        <input type="radio" name="friendUser" value="<%= friendsList[j] %>"><%= friendsList[j] %><br>
+        <% } %>
+        <button class="userButton">Add Friend</button>
+    </form>
+    <% } %>
+
+</div>
+
+</body>

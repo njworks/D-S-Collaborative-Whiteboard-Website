@@ -1,0 +1,495 @@
+/*Login and sign up border*/
+.loginDiv {
+    width: 15%;
+    height: 40%;
+    padding: 2%;
+    border: 5px solid orange;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+/*Login buttons*/
+.loginButton {
+    background-color: dodgerblue;
+    padding: 10px 24px;
+    border-radius: 4px;
+}
+
+.loginInput {
+    width: 100%;
+}
+
+.logo {
+    position: absolute;
+    top: 1%;
+    left: 1%;
+    width: 50px;
+    height: 30px;
+}
+
+/*Div holding user boards and shared boards*/
+#boardDiv {
+    width: 40%;
+    height: 50%;
+    padding: 1%;
+    border: 5px solid orange;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 10%;
+    left: 12%;
+}
+
+/*Holds friends list*/
+#friendDiv {
+    width: 20%;
+    height: 50%;
+    padding: 1%;
+    border: 5px solid orange;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 10%;
+    right: 15%;
+}
+
+#notificationBox {
+    width: 40%;
+    height: 15%;
+    padding: 1%;
+    border: 5px solid orange;
+    border-radius: 5px;
+
+    position: absolute;
+    top: 70%;
+    left: 12%;
+}
+
+#notificationScroll{
+    height: 90px;
+    overflow-y: auto;
+}
+
+#friendId {
+    width: 140px;
+}
+
+/*Friends names in user page*/
+#friendList {
+    height: 350px;
+    overflow-y: auto;
+}
+
+/*Button delete in user page*/
+#buttonDelete {
+    position: absolute;
+    top: 3.7%;
+    left: 10%;
+}
+
+/*All buttons*/
+button {
+    cursor: pointer;
+}
+
+/*Sign out button in user page*/
+#userSignOut {
+    position: absolute;
+    top: 2%;
+    right: 15%;
+}
+
+/*Welcome in user page*/
+#welcome {
+    position: absolute;
+    top: 4%;
+    left: 12%;
+}
+
+/*Every button in user page except board buttons*/
+.userButton {
+    background-color: dodgerblue;
+    border: 1px solid orange;
+    border-radius: 5px;
+}
+
+/*Buttons showing board titles*/
+.boardButtons {
+    background-color: #555555;
+    font-size: 16px;
+    border: none;
+    color: white;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.boardButtons:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+/*user board list*/
+#userBoardScroll {
+    height: 50px;
+    overflow-y: auto;
+}
+
+/*shared board list*/
+#sharedBoardScroll {
+    height: 50px;
+    overflow-y: auto;
+}
+
+/*Board title position*/
+#boardTitle {
+    position: absolute;
+    top: 2%;
+    left: 45%;
+}
+
+/* Dropdown Button
+ref: https://www.w3schools.com/howto/howto_css_dropdown.asp
+accessed: 12:23 12/03/18*/
+.dropbtn {
+    /*background-color: #4CAF50;*/
+    /*color: white;*/
+    /*padding: 2px;*/
+    font-size: 16px;
+    border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    /*background-color: #f1f1f1;*/
+    /*min-width: 60px;*/
+    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: black;
+    padding: 2px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+    background-color: #ddd
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/*!* Change the background color of the dropdown button when the dropdown content is shown *!*/
+/*.dropdown:hover .dropbtn {*/
+/*background-color: #3e8e41;*/
+/*}*/
+
+/*Position user button in board page*/
+#userbtn {
+    position: absolute;
+    top: 2%;
+    right: 12%;
+}
+
+/*Position setting button in board page*/
+#settingbtn {
+    position: absolute;
+    top: 2%;
+    right: 5%;
+}
+
+/*canvas*/
+#canvas {
+    border: 5px solid orange;
+    z-index: -1;
+}
+
+/*Canvas div*/
+#canvasHold {
+    position: absolute;
+    left: 2%;
+}
+
+/*Zoom in button*/
+#zoomI {
+    /*padding: 1%;*/
+    position: absolute;
+    left: 2.5%;
+    top: 20%;
+    z-index: 1;
+}
+
+/*Zoom out button*/
+#zoomO {
+    /*padding: 1%;*/
+    position: absolute;
+    left: 2.5%;
+    top: 25%;
+    z-index: 1;
+}
+
+/*Paint tools*/
+#tools {
+    position: absolute;
+    right: 4.5%;
+    top: 20%;
+    z-index: 1;
+}
+
+/*PDF export button*/
+#divPDF {
+    position: absolute;
+    top: 2%;
+    left: 35%;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.drop {
+    position: absolute;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.drop-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.drop-contents {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    /*min-width: 160px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.drop-content a {
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.drop-content a:hover {
+    background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.drop:hover .drop-content {
+    display: block;
+}
+
+/* Links inside the dropdown */
+.drop-contents a {
+    color: black;
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.drop-contents a:hover {
+    background-color: #f1f1f1
+}
+
+/* Show the dropdown menu on hover */
+.drop:hover .drop-contents {
+    display: block;
+}
+
+/*Chat box*/
+#chatbox {
+    background-color: white;
+    border: 3px solid orange;
+    position: absolute;
+    left: 1%;
+    bottom: 0%;
+}
+
+#Cbox {
+    height: 200px;
+    overflow-y: auto;
+}
+
+ul {
+    margin: 0;
+    padding: 5%;
+    list-style-type: none;
+}
+
+/* The Modal for reminder div
+ https://www.w3schools.com/howto/howto_css_login_form.asp  accessed:17:51 12/03/18*/
+.modal {
+    display: none; /* Hidden by default */
+    position: relative; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 35%;
+    top: 40%;
+    width: 30%; /* Full width */
+    height: 40%; /* Full height */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5px auto; /* 15% from the top and centered */
+    width: 70%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    /* Position it in the top right corner outside of the modal */
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #fa8c00;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+/* Close button on hover */
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0)
+    }
+    to {
+        transform: scale(1)
+    }
+}
+
+/*Remind date and time positions*/
+#remindDate {
+    position: relative;
+    top: 20%;
+    left: 2%;
+}
+
+#remindTime {
+    position: relative;
+    top: 30%;
+    left: 2%;
+}
+
+/*Collaborative button div*/
+#collabDiv {
+    position: absolute;
+    bottom: 0.5%;
+    right: 4%;
+}
+
+/*Drop up for collaborate*/
+.dropup {
+    position: relative;
+    display: inline-block;
+
+}
+
+/* Dropup content (Hidden by Default) */
+.dropup-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    bottom: 100%;
+}
+
+/** Links inside the dropup *!*/
+.dropup-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/** Change color of dropup links on hover *!*/
+.dropup-content a:hover {
+    background-color: #ddd
+}
+
+/* Show the dropup menu on hover */
+.dropup:hover .dropup-content {
+    display: block;
+}
+
+/*Drop down for arrow and dashed line*/
+
+.dropdownA {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-contentA {
+    display: none;
+    position: absolute;
+    /*background-color: #f9f9f9;*/
+    /*min-width: 160px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdownA:hover .dropdown-contentA {
+    display: block;
+}
+/*Together.js div positioning*/
+#together{
+    position: absolute;
+    top: 2%;
+    right: 20%;
+}
+/*Scroll for FAQ box*/
+#faqScroll{
+    height: 600px;
+    overflow-y: auto;
+}

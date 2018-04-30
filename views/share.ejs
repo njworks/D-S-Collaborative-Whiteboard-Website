@@ -1,0 +1,63 @@
+<!--Purpose: Shared whiteboard page, with uneditable whiteboard and user can
+    add comments and download PDF of whiteboard.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shared Whiteboard</title>
+    <script type="text/javascript" src="fabric.js"></script>
+    <script type="text/javascript" src="jspdf.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="shared.js"></script>
+</head>
+<body onload="start()">
+<h2 id="title">Title: <%= boardID %></h2>
+
+<canvas id="canvas" height="500" width="700"></canvas>
+
+<!-- Description : Zoom in and out of whiteboard.-->
+<div>
+    <button onclick="zoomIn()" id="zIn" type="button">+</button>
+    <button onclick="zoomOut()" id="zOut" type="button">-</button>
+</div>
+
+<!-- Description : PDF export button.-->
+<div>
+    <button onclick="exportPDF()">PDF Export</button>
+</div>
+
+<!-- Description : Comments.-->
+<div style="width: 300px; height: 200px; overflow: auto">
+    <h2>Comments</h2>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Comment</th>
+            <th>Time</th>
+        </tr>
+        <% for (var i = 0; i < comments.length; i++){ %>
+        <tr>
+            <td><%= comments[i].name %></td>
+            <td><%= comments[i].comment %></td>
+            <td><%= comments[i].time %></td>
+        </tr>
+        <% } %>
+    </table>
+</div>
+</br>
+<!-- Description : Add Comments.-->
+<div>
+    <h2>Add Comments</h2>
+    <form action="sendComment" method="post">
+        Name:<input name="username" placeholder="Enter your name">
+        </br>
+        </br>
+        Comment: <textarea placeholder="Enter comment" rows="5" cols="40" name="comment"
+                           maxlength="254"></textarea>
+        <button>Submit</button>
+    </form>
+</div>
+</body>
+</html>
+
